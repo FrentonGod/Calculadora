@@ -4,17 +4,31 @@ import './App.css'
 const buttonsClasses = "btn btn-primary w-75";
 
 function App() {
+  const [number1, setNumber1] = useState('');
   const [digital, setDigital] = useState('0')
+  const [cleardigital, setClearDigital] = useState('0');
 
   const handleButtonClick = (e) =>{
     const {value} = e.target;
     if (value === '.') {
-      if (digital.includes('.')) return;
+      if (digital.includes('.')) 
+      return;
     }
+
     if (value === 'C') {
       setDigital('0')
       return;
     }
+        //===============================================================
+        console.log ({number1});
+
+        if (cleardigital){
+          console.log('cambia pantalla');
+          setDigital(value);
+          setClearDigital(false);
+          return;
+        }
+        
     if (digital === '0' && value !== '.') {
       setDigital(value)
       return;
@@ -23,11 +37,24 @@ function App() {
   }
 
   const handleDelButtonClick = () => {
-    if  (digital.length === 1) {
+    if (digital.length === 1) {
       setDigital('0');
       return;
     } 
       setDigital(digital.slice(0, -1));
+  }
+  const handleOperationButtonClick = (e) => {
+    const operator = e.target.value;
+    switch (operator) {
+      case '+':
+        setNumber1(digital);
+        console.log('suma');
+        break;
+
+      default:
+        break;
+    }
+    setClearDigital(true);
   }
 
   return (
@@ -104,7 +131,9 @@ function App() {
         type= "button"
         className={buttonsClasses}
         style={{height: "80px"}}
-        >+</button>
+        value = "+"
+        onClick={(e) => handleOperationButtonClick (e)}
+        > + </button> 
       </td>
       </tr>
       {/* Fourth row */}
